@@ -1,13 +1,25 @@
 .list{
 
+  margin-top: $main-spacing;
+
+  &__title{
+    text-align: center;
+
+  }
+
+  & p{
+    text-align: center;
+  }
 
   &__tiles{
+    margin-top: $main-spacing;
     display: flex;
     flex-wrap: wrap;
     flex-basis: 100%;
     justify-content: space-evenly;
-  }
 
+  }
+  
   &__tile{
     width: 22%;
     background-color: $primary-color;
@@ -16,8 +28,12 @@
     margin: ($main-spacing / 2) 0;
     color: $titleText-color;
     transition: .3s;
+    text-transform: uppercase;
     cursor: pointer;
-
+    
+    &.active{
+      background-color: darken($primary-color, 15%)
+    }
     &:hover{
       background-color: lighten($primary-color, 15%);
     }
