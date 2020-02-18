@@ -6,7 +6,8 @@ class Dogs {
     this.apiUrl = 'https://dog.ceo/api'
     this.imgEl = document.querySelector('.image');
     this.backgroundEl = document.querySelector('.dog__background');
-    this.tilesEl = document.querySelector('.list__tiles')
+    this.tilesEl = document.querySelector('.list__tiles');
+    this.nameEl = document.querySelector('.dog__title');
 
     this.init();
   }
@@ -32,13 +33,15 @@ class Dogs {
 
   init() {
     this.getRandomImage()
-      .then(imgSrc => {
-        this.imgEl.setAttribute('src', imgSrc);
-        this.backgroundEl.style.backgroundImage = `url("${imgSrc}")`;
-        this.backgroundEl.style.backgroundSize = 'cover';
-      });
+      .then(img => this.showReadyImage(img));
 
     this.showListBreeds();
+  }
+
+  showReadyImage(img) {
+    this.imgEl.setAttribute('src', img);
+    this.backgroundEl.style.backgroundImage = `url("${img}")`;
+    this.backgroundEl.style.backgroundSize = 'cover';
   }
 
   addBreed(breed, subBreed) {
@@ -58,13 +61,15 @@ class Dogs {
     tile.classList.add('list__tile');
     tile.textContent = name;
 
-    tile.addEventListener('click', () => {
+    tile.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo(0, 0)
       this.getRandomImageByBreeds(type)
-        .then(imgSrc => {
-          this.imgEl.setAttribute('src', imgSrc);
-          this.backgroundEl.style.backgroundImage = `url("${imgSrc}")`;
-          this.backgroundEl.style.backgroundSize = 'cover';
-        });
+        .then(img => this.showReadyImage(img));
+
+      this.nameEl.textContent = name;
+
+      tile.classList.add('active');
     })
 
     this.tilesEl.appendChild(tile)
